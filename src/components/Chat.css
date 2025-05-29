@@ -1,5 +1,6 @@
 section.chat-window {
     padding-top: 24px;
+    line-height: 28px;
     
     .chat {
         padding: 20px;
@@ -12,13 +13,14 @@ section.chat-window {
             margin: 2px 0;
             font-size: 16px;
             padding: 16px;
-            line-height: 20px;
+            /* line-height: 20px; */
         }
 
         div.loader{
+            margin-top: 16px;
             
             p {
-                margin: 16px 0;
+                /* margin: 16px 0; */
                 padding: 0;
             }
 

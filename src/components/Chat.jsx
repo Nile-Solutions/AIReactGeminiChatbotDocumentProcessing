@@ -1,8 +1,9 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import './Chat.css';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import ReactMarkdown from 'react-markdown';
 
-function Chat({file}) {
+function Chat({file, chatMsg}) {
 
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     const model = genAI.getGenerativeModel({ model: 'models/gemini-1.5-flash' });
@@ -26,7 +27,7 @@ function Chat({file}) {
                     },
                     `
                         Answer this question about the attached document: ${input}.
-                        Answer as a chatbot with short messages and text only (no markdowns, tags or symbols)
+                        Answer as a chatbot
                         Chat history: ${JSON.stringify(messages)}
                     `
                 ]);
@@ -44,6 +45,17 @@ function Chat({file}) {
         }
     }
 
+    useEffect(()=>{
+        setMessages([]);
+        setInput(chatMsg);
+    }, [file]);
+
+    useEffect(()=>{
+        if(input.length>0 && chatMsg.length>0 && messages.length == 0){
+            handleSendMessage();
+        }
+    }, [input, messages]);
+
   return (
     <section className="chat-window">
         <h2>
@@ -55,7 +67,7 @@ function Chat({file}) {
                 {
                     messages.map((msg)=>(
                         <div className={msg.role} key={msg.text}>
-                            <p>{msg.text}</p>
+                            <ReactMarkdown>{msg.text}</ReactMarkdown>
                         </div>
                     ))
                 }

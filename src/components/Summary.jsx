@@ -36,14 +36,14 @@ function Summary({file}) {
     }
 
     useEffect(() => {
-        if(status === "idle") {
-            getSummary();
-        }
-    }, [status]);
+        getSummary();
+    }, [file]);
 
   return (
     <section className="summary">
-        <img src={file.imageUrl} alt="Preview Image" />
+        <a href={file.imageUrl} target="_blank">
+            <img src={file.type.includes("pdf")?"/document-icon.png":file.imageUrl} alt="Preview Image" />
+        </a>
         <h2>Summary</h2>
         {
             status === "loading" ?
